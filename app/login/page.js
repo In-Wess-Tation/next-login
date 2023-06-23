@@ -3,10 +3,12 @@
 import { Formik, Form, Field } from "formik";
 import { setCookie } from "cookies-next";
 import { useState } from "react";
+import { useRouter} from "next/navigation";
 
 const Login = () => {
 
     const [errors, setErrors] = useState(null);
+    const router = useRouter();
 
     //Vi bruger mappen "framework2-api" som api. Mappen ligger i øvelser mappen
     return ( 
@@ -17,6 +19,7 @@ const Login = () => {
             }}
             onSubmit={(values, {setSubmitting}) => {
                 //post til api
+                console.log(values)
                 fetch("http://localhost:4000/login", {
                     headers: {
                         "Content-Type": "application/json",
@@ -36,6 +39,8 @@ const Login = () => {
                 .then(result => {
                     setCookie("token", result.accessToken)
                     setCookie("user", JSON.stringify(result.user))
+                    setErrors(null)
+                    router.push("/secrets")
                 })
                 .catch(error => setErrors({status: JSON.parse(error.message)}))
                 .finally(() => setSubmitting(false))
@@ -48,7 +53,7 @@ const Login = () => {
                     <Field className="text-black" type="email" name="email" />
                     <Field className="text-black" type="password" name="password" />
                     <button type="submit" disabled={isSubmitting}>{!isSubmitting ? 'Log In' : 'Logging In...'}</button>
-                    {errors?.status && <p>{errors.status}</p>}
+                    {errors?.status && <p className="text-red-500">{errors.status}</p>}
                 </Form>)}
             </Formik>
         </main>
