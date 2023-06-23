@@ -38,8 +38,10 @@ const LoginForm = () => {
                 }})
                 
             .then(result => {
-                setCookie("token", result.accessToken)
-                setCookie("user", JSON.stringify(result.user))
+                setCookie("token", result.accessToken, {sameSite: "lax"});
+                setCookie("user", JSON.stringify(result.user, {sameSite: "lax"}));
+                //vi bruger same site fordi så sender cookien kun når den skal bruges
+                //istedet for at den altid og konstant bliver brugt
                 setErrors(null)
                 router.push("/secrets")
             })

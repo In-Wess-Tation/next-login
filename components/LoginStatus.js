@@ -18,8 +18,10 @@ const LoginStatus = () => {
     }, [pathname]);
 
     const handleLogout = () => {
-        deleteCookie("token");
-        deleteCookie("user");
+        deleteCookie("token", {sameSite: "lax"});
+        deleteCookie("user", {sameSite: "lax"});
+        //vi bruger same site fordi så sender cookien kun når den skal bruges
+        //istedet for at den altid og konstant bliver brugt
         setToken(null);
         router.push("/");
     }
