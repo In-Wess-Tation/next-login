@@ -1,5 +1,3 @@
-
-import { AuthProvider } from '@/context/AuthContext';
 import LoginStatus from './LoginStatus';
 
 const Header = () => {
