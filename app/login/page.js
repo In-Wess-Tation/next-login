@@ -1,8 +1,12 @@
 "use client"
 //Det skal være et client component fordi formmik bruger hooks, og hooks er et client component
 import { Formik, Form, Field } from "formik";
+import { setCookie } from "cookies-next";
+import { useState } from "react";
 
 const Login = () => {
+
+    const [errors, setErrors] = useState(null);
 
     //Vi bruger mappen "framework2-api" som api. Mappen ligger i øvelser mappen
     return ( 
@@ -20,8 +24,22 @@ const Login = () => {
                     method: "POST",
                     body: JSON.stringify(values),
                     //det er et JSON object hvis der er quotes på begge sider af colonen
-                }).then(response => response.json())
-                .then(result => console.log(result))
+                })
+                .then(async response => {
+                    if(!response.ok) {
+                        const text = await response.text();
+                        throw Error(text);
+                    }else {
+                        return response.json()
+                    }})
+                    
+                .then(result => {
+                    setCookie("token", result.accessToken)
+                    setCookie("user", JSON.stringify(result.user))
+                })
+                .catch(error => setErrors({status: JSON.parse(error.message)}))
+                .finally(() => setSubmitting(false))
+
                 setSubmitting(false);
             }}
             >
@@ -30,6 +48,7 @@ const Login = () => {
                     <Field className="text-black" type="email" name="email" />
                     <Field className="text-black" type="password" name="password" />
                     <button type="submit" disabled={isSubmitting}>{!isSubmitting ? 'Log In' : 'Logging In...'}</button>
+                    {errors?.status && <p>{errors.status}</p>}
                 </Form>)}
             </Formik>
         </main>
