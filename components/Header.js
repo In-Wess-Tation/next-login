@@ -20,6 +20,7 @@ const Header = () => {
                 <Link href="/" className="menu-item">Home Page</Link>
                 <Link href="/resp-css" className="menu-item">Responsive CSS</Link>
                 <Link href="/resp-tail" className="menu-item">Responsive Tailwind</Link>
+                <Link href="/statements" className="menu-item">Statements</Link>
             </Menu>
 
             
