@@ -1,0 +1,55 @@
+/* Mobile */
+
+.responsive {
+    max-width: 72rem;
+}
+
+.article {
+    margin: 0 1.5rem 1.5rem;
+    background-color: aquamarine;
+    color: darkcyan;
+    padding: 1px 0;
+}
+
+.headline {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0.5rem 1rem;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.paragraph {
+    margin: 0.5rem 1rem;
+}
+
+
+
+
+/* Small screen */
+
+@media screen and (min-width: 40rem) {
+    .responsive {
+        margin: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .article {
+        margin: 0;
+    }
+}
+
+
+
+/*Tablet screen*/
+
+@media screen and (min-width: 72rem) {
+    .responsive {
+        margin: 0 auto;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
